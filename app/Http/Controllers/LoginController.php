@@ -27,9 +27,18 @@ class LoginController extends Controller
             'password'=>$request->password
         ];
         if (Auth::attempt($infologin)){
-            echo "berhasil login";
+            if(Auth::user()->role=='admin'){
+
+                return redirect ('home');
+            }else{
+                return redirect('home');
+            }
         }else{
             return redirect('/')->withErrors('Email dan password salah')->withInput();
         }
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect ('');
     }
 }
